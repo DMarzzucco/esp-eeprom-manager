@@ -1,18 +1,34 @@
-#include <Arduino.h>
+#include <SPI.h>
 
-// put function declarations here:
-int myFunction(int, int);
+#define EEPROM_CS D8
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(115200);
+
+  SPI.begin();
+
+  pinMode(EEPROM_CS, OUTPUT);
+  digitalWrite(EEPROM_CS, HIGH);
+
+  Serial.println("EEPROM TEST");
+}
+
+byte readStatusRegister() {
+  digitalWrite(EEPROM_CS, LOW);
+
+  SPI.transfer(0x05); // RDSR
+  byte status = SPI.transfer(0x00);
+
+  digitalWrite(EEPROM_CS, HIGH);
+
+  return status;
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
+  byte status = readStatusRegister();
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  Serial.print("STATUS: 0x");
+  Serial.println(status, HEX);
+
+  delay(1000);
 }
