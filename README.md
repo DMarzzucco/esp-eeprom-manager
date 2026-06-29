@@ -16,6 +16,8 @@ D7 -> DI/MOSI   | pin 5
 D8 -> CS        | pin 1
 3V3 -> VCC      | pin 8
 G -> GND        | pin 4                            
+3V3 -> VCC      | pin 3                            
+3V3 -> VCC      | pin 7                            
 
 
 ## falta 
@@ -27,3 +29,4 @@ WP# conectado a VCC.
 HOLD# conectado a VCC.
 
 * unir tres cables con uno que vaya al pin 3V3 (por ejemplo, con una regleta, un conector tipo Wago, soldándolos temporalmente, etc.).
+ 

@@ -5,31 +5,27 @@
 
 void setup()
 {
-  Serial.begin(115200);
+    SPI.begin();
 
-  SPI.begin();
+    SPI.beginTransaction(
+        SPISettings(1000000, MSBFIRST, SPI_MODE0)
+    );
 
-  SPI.beginTransaction(SPISettings(1000000, MSBFIRST, SPI_MODE0));
-
-  pinMode(EEPROM_CS, OUTPUT);
-  digitalWrite(EEPROM_CS, HIGH);
-
-  Serial.println("CS en HIGH");
+    pinMode(EEPROM_CS, OUTPUT);
+    digitalWrite(EEPROM_CS, HIGH);
 }
 
 void loop()
 {
-  digitalWrite(EEPROM_CS, LOW);
+    digitalWrite(EEPROM_CS, LOW);
 
-  SPI.transfer(0x9F);
+    for (int i = 0; i < 100; i++)
+    {
+        SPI.transfer(0xAA);
+        SPI.transfer(0x55);
+    }
 
-  byte a = SPI.transfer(0x00);
-  byte b = SPI.transfer(0x00);
-  byte c = SPI.transfer(0x00);
+    digitalWrite(EEPROM_CS, HIGH);
 
-  digitalWrite(EEPROM_CS, HIGH);
-
-  Serial.printf("%02X %02X %02X\n", a, b, c);
-
-  delay(2000);
+    delay(1000);
 }
