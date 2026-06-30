@@ -20,10 +20,13 @@ void setup()
 void loop()
 {
     digitalWrite(EEPROM_CS, LOW);
+    SPI.transfer(0x01);
+    SPI.transfer(0x80); 
+    digitalWrite(EEPROM_CS, HIGH);
 
+    digitalWrite(EEPROM_CS, LOW);
     SPI.transfer(0x05);  
     uint8_t status = SPI.transfer(0x00);
-
     digitalWrite(EEPROM_CS, HIGH);
 
     Serial.print("Status: 0x");
