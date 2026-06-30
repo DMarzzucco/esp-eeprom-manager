@@ -20,16 +20,23 @@ void setup()
 void loop()
 {
     digitalWrite(EEPROM_CS, LOW);
-    SPI.transfer(0x01);
-    SPI.transfer(0x80); 
+    SPI.transfer(0x06);
     digitalWrite(EEPROM_CS, HIGH);
 
+    delay(15);
+
     digitalWrite(EEPROM_CS, LOW);
-    SPI.transfer(0x05);  
+    SPI.transfer(0x01);
+    SPI.transfer(0x80);
+    digitalWrite(EEPROM_CS, HIGH);
+
+    delay(15);
+
+    digitalWrite(EEPROM_CS, LOW);
+    SPI.transfer(0x05);
     uint8_t status = SPI.transfer(0x00);
     digitalWrite(EEPROM_CS, HIGH);
 
-    Serial.print("Status: 0x");
     Serial.println(status, HEX);
 
     delay(1000);
